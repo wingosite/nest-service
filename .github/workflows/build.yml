@@ -44,7 +44,7 @@ jobs:
             NEST_APP_MYSQL_USERNAME=${{ secrets.NEST_APP_MYSQL_USERNAME }}
             NEST_APP_MYSQL_PASSWORD=${{ secrets.NEST_APP_MYSQL_PASSWORD }}
 
-  pull-docker:
+  start:
     needs: [build]
     name: Pull Docker
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
           host: ${{ secrets.CLOUD_HOST }}
           username: ${{ secrets.CLOUD_USER }}
           password: ${{ secrets.CLOUD_PASS }}
-          port: 22
+          port: ${{ secrets.CLOUD_PORT }}
           script: |
             docker stop nest-app
             docker rm -f nest-app
