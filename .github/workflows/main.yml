@@ -1,0 +1,64 @@
+name: Build Nest Service
+
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      -
+        name: Get MetaData From Docker Images
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ secrets.DOCKER_REPOSITORY }}
+      -
+        name: Build and push to docker hub
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            NEST_APP_MYSQL_HOST=${{ secrets.NEST_APP_MYSQL_HOST }}
+            NEST_APP_MYSQL_PORT=${{ secrets.NEST_APP_MYSQL_PORT }}
+            NEST_APP_MYSQL_USERNAME=${{ secrets.NEST_APP_MYSQL_USERNAME }}
+            NEST_APP_MYSQL_PASSWORD=${{ secrets.NEST_APP_MYSQL_PASSWORD }}
+
+  pull-docker:
+    needs: [build]
+    name: Pull Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.CLOUD_HOST }}
+          username: ${{ secrets.CLOUD_USER }}
+          password: ${{ secrets.CLOUD_PASS }}
+          port: 22
+          script: |
+            docker stop nest-app
+            docker rm -f nest-app
+            docker rmi ${{ secrets.DOCKER_REPOSITORY }}:main
+            sudo docker pull ${{ secrets.DOCKER_REPOSITORY }}:main
+            sudo docker run -d -p 3005:3005 -p 3006:3006 --name nest-app ${{ secrets.DOCKER_REPOSITORY }}:main

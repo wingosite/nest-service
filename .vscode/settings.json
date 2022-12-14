@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "prettier.singleQuote": true,
+  "prettier.endOfLine": "lf",
+  "typescript.format.enable": true,
+}
