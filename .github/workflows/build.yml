@@ -46,7 +46,6 @@ jobs:
 
   start:
     needs: [build]
-    name: Start
     runs-on: ubuntu-latest
     steps:
       - name: Deploy

@@ -3,6 +3,7 @@ import * as path from 'path';
 
 const isProd = process.env.NODE_ENV === 'production';
 console.log(process.env.NEST_APP_MYSQL_HOST);
+console.log(process.env.NEST_APP_MYSQL_PORT, 'NEST_APP_MYSQL_PORT');
 function parseEnv() {
   const localEnv = path.resolve('.env.local');
   const prodEnv = path.resolve('.env');
