@@ -46,7 +46,7 @@ jobs:
 
   start:
     needs: [build]
-    name: Pull Docker
+    name: Start
     runs-on: ubuntu-latest
     steps:
       - name: Deploy
