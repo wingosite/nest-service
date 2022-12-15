@@ -30,7 +30,7 @@ export class AppArticleController {
 
   @ApiTags('文章管理')
   @ApiOperation({ summary: '获取推荐文章列表', description: '获取推荐数据' })
-  @Get('/recommand/list')
+  @Get('/recommend/list')
   async getRecommendList() {
     return this.appArticleService.getRecommendList();
   }

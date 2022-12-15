@@ -26,7 +26,8 @@ export class AppArticleService {
   async getLatest() {
     return await this.articleRepository
       .createQueryBuilder('article')
-      .limit(10)
+      .orderBy('article.update_date', 'DESC')
+      .limit(5)
       .getMany();
   }
 
