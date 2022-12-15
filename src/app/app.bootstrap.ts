@@ -7,7 +7,7 @@ async function AppBootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.setGlobalPrefix('/app/v1', { exclude: ['/'] });
+  app.setGlobalPrefix('/app/v2', { exclude: ['/'] });
   app.enableCors();
 
   const options = new DocumentBuilder()
@@ -17,7 +17,7 @@ async function AppBootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('/app/swagger-doc', app, document);
+  SwaggerModule.setup('/app/v2/swagger-doc', app, document);
 
   await app.listen(3006);
 }
