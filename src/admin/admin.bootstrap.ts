@@ -13,7 +13,7 @@ async function AdminBootstrap() {
     new UnauthorizedExceptionFilter(),
   );
   app.useGlobalInterceptors(new TransformInterceptor());
-  app.setGlobalPrefix('/admin/v2', { exclude: ['/'] });
+  app.setGlobalPrefix('/admin/v1', { exclude: ['/'] });
   app.enableCors();
 
   const options = new DocumentBuilder()
@@ -24,7 +24,7 @@ async function AdminBootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('/admin/v2/swagger-doc', app, document);
+  SwaggerModule.setup('/admin/swagger-doc', app, document);
 
   await app.listen(3005);
 }
