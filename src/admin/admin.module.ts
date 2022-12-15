@@ -24,8 +24,8 @@ import { RoleModule } from './modules/role/role.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      ignoreEnvFile: true,
-      envFilePath: ['./env.local', '.env'],
+      ignoreEnvFile: process.env.NODE_DEV === 'production',
+      envFilePath: ['.env.development'],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -41,9 +41,9 @@ import { RoleModule } from './modules/role/role.module';
           RoleEntity,
         ], //实体
         host: configService.get('NEST_APP_MYSQL_HOST', 'localhost'),
-        port: configService.get('NEST_APP_MYSQL_PORT', 2022),
+        port: configService.get('NEST_APP_MYSQL_PORT', 3306),
         username: configService.get('NEST_APP_MYSQL_USERNAME', 'root'),
-        password: configService.get('NEST_APP_MYSQL_PASSWORD', '123456'),
+        password: configService.get('NEST_APP_MYSQL_PASSWORD', 'password'),
         database: configService.get('NEST_APP_MYSQL_DATABASE', 'sass'),
         timezone: '+08:00', //服务器上配置的时区,
         synchronize: true, //根据实体自动创建数据库表， 生产环境建议关闭

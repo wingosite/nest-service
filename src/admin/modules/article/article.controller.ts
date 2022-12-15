@@ -1,4 +1,4 @@
-import { RolesGuard } from '@/admin/auth/role.guard';
+// import { RolesGuard } from '@/admin/auth/role.guard';
 import { ArticleDto } from '@/dtos';
 import { QueryDto } from '@/dtos/page.dto';
 import {
@@ -22,7 +22,7 @@ import { ArticleService } from './article.service';
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  // @UseGuards(AuthGuard('jwt'), RolesGuard)
   @ApiBearerAuth()
   @ApiTags('文章管理')
   @HttpCode(HttpStatus.OK)
@@ -32,8 +32,6 @@ export class ArticleController {
     return this.articleService.findAll(body);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @ApiBearerAuth()
   @ApiTags('文章管理')
   @Post('create')
   @HttpCode(HttpStatus.CREATED)

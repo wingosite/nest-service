@@ -49,7 +49,6 @@ export class UserController {
   @ApiTags('用户管理')
   @ApiBearerAuth()
   @Post('createUser')
-  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: '创建用户', description: '注册新用户' })
   async createUser(@Body() body: UserDto) {
     return this.userService.addUser(body);
