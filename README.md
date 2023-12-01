@@ -2,7 +2,7 @@
 
 ```bash
 # 克隆项目
-$ git clone https://github.com/wingosite/nest-service.git
+$ git clone https://githubfast.com/wingosite/nest-service.git
 
 # 进入项目目录
 $ cd nest-service
@@ -11,7 +11,7 @@ $ cd nest-service
 $ npm install
 ```
 
-## Run
+## Run 1
 
 ```bash
 # 开发环境
